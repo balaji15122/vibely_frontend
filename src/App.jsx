@@ -7,12 +7,20 @@ import PlayerBar from "./components/PlayerBar";
 import ArtistStudio from "./components/ArtistStudio";
 
 const USER_KEY = "vibely_user";
+function readStoredUser() {
+  const raw = localStorage.getItem(USER_KEY);
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch {
+    localStorage.removeItem(USER_KEY);
+    return null;
+  }
+}
 
 export default function App() {
-  const [user, setUser] = useState(() => {
-    const raw = localStorage.getItem(USER_KEY);
-    return raw ? JSON.parse(raw) : null;
-  });
+  const [user, setUser] = useState(readStoredUser);
   const [tracks, setTracks] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [currentTrackId, setCurrentTrackId] = useState(null);
