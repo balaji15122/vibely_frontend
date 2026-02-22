@@ -1,9 +1,7 @@
-const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL ||
-  (import.meta.env.PROD
-    ? "https://vibely-backend-frxb.onrender.com"
-    : "http://localhost:3000")
-).replace(/\/+$/, "");
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
+});
 const TOKEN_KEY = "vibely_token";
 
 export function setAuthToken(token) {
